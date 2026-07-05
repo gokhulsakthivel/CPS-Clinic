@@ -26,9 +26,12 @@ jobs:
           node-version: 20
           cache: npm
 
-      - run: npm ci
+      - run: npm ci --include=dev
+        env:
+          NODE_ENV: development
+          NPM_CONFIG_PRODUCTION: 'false'
 
-      - run: npm run build
+      - run: npx vite build
         env:
           VITE_BASE: /CPS-Clinic/
 
