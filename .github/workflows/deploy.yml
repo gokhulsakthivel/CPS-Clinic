@@ -24,21 +24,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
 
-      - name: Install dependencies
-        run: |
-          set -x
-          env | grep -Ei 'NODE|NPM|CI' || true
-          rm -rf node_modules
-          npm install --no-audit --no-fund --loglevel=info 2>&1 | tail -40
-          echo '--- top-level node_modules ---'
-          ls node_modules | head -40
-          echo '--- vite? ---'
-          ls -la node_modules/vite 2>&1 | head -5 || true
-          test -f node_modules/vite/bin/vite.js && echo "OK vite bin present" || echo "MISSING vite bin"
+      - run: npm ci
 
-      - name: Build
-        run: node ./node_modules/vite/bin/vite.js build
+      - run: npm run build
         env:
           VITE_BASE: /CPS-Clinic/
 
