@@ -3,9 +3,8 @@ import { hero, clinic, doctor } from '../constants/content.js';
 import Button from '../ui/Button.jsx';
 import FadeIn from '../ui/FadeIn.jsx';
 
-// Placeholder frame used until real doctor photography is confirmed.
-// Honest grey panel with doctor initials — swaps 1:1 with a real <img> later.
-function PhotoFrame({ initials, label, ratio }) {
+function PhotoFrame({ alt, ratio }) {
+  const base = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
   return (
     <div
       style={{
@@ -16,36 +15,27 @@ function PhotoFrame({ initials, label, ratio }) {
         border: `1px solid ${C.border}`,
         borderRadius: 20,
         overflow: 'hidden',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        gap: 8,
       }}
     >
-      <span
-        aria-hidden="true"
-        style={{
-          fontFamily: 'Poppins',
-          fontWeight: 700,
-          fontSize: 'clamp(48px, 8vw, 88px)',
-          color: '#C9D3DC',
-          letterSpacing: '-0.04em',
-          lineHeight: 1,
-        }}
-      >
-        {initials}
-      </span>
-      <span
-        style={{
-          fontSize: 12,
-          color: C.muted,
-          letterSpacing: '0.4px',
-          textTransform: 'uppercase',
-        }}
-      >
-        {label}
-      </span>
+      <picture>
+        <source srcSet={`${base}/doctor.webp`} type="image/webp" />
+        <img
+          src={`${base}/doctor.jpg`}
+          alt={alt}
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: '50% 22%',
+            display: 'block',
+          }}
+        />
+      </picture>
     </div>
   );
 }
@@ -136,7 +126,7 @@ export default function Hero() {
         {/* Right column — photo placeholder */}
         <FadeIn delay={80}>
           <div style={{ maxWidth: 460, marginInline: 'auto', width: '100%' }}>
-            <PhotoFrame initials={doctor.initials} label="Photograph coming soon" ratio="4 / 5" />
+            <PhotoFrame alt={`Portrait of ${doctor.name}, ${doctor.title}`} ratio="4 / 5" />
           </div>
         </FadeIn>
       </div>

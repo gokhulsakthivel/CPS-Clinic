@@ -4,7 +4,8 @@ import { doctor } from '../constants/content.js';
 import FadeIn from '../ui/FadeIn.jsx';
 import Svg from '../ui/Svg.jsx';
 
-function PhotoFrame({ initials }) {
+function PhotoFrame({ alt }) {
+  const base = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
   return (
     <div
       style={{
@@ -15,36 +16,26 @@ function PhotoFrame({ initials }) {
         border: `1px solid ${C.border}`,
         borderRadius: 20,
         overflow: 'hidden',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        gap: 8,
       }}
     >
-      <span
-        aria-hidden="true"
-        style={{
-          fontFamily: 'Poppins',
-          fontWeight: 700,
-          fontSize: 'clamp(56px, 9vw, 96px)',
-          color: '#C9D3DC',
-          letterSpacing: '-0.04em',
-          lineHeight: 1,
-        }}
-      >
-        {initials}
-      </span>
-      <span
-        style={{
-          fontSize: 12,
-          color: C.muted,
-          letterSpacing: '0.4px',
-          textTransform: 'uppercase',
-        }}
-      >
-        Photograph coming soon
-      </span>
+      <picture>
+        <source srcSet={`${base}/doctor.webp`} type="image/webp" />
+        <img
+          src={`${base}/doctor.jpg`}
+          alt={alt}
+          loading="lazy"
+          decoding="async"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: '50% 22%',
+            display: 'block',
+          }}
+        />
+      </picture>
     </div>
   );
 }
@@ -80,7 +71,7 @@ export default function Doctor() {
         {/* Photo */}
         <FadeIn>
           <div style={{ maxWidth: 420, marginInline: 'auto', width: '100%' }}>
-            <PhotoFrame initials={doctor.initials} />
+            <PhotoFrame alt={`Portrait of ${doctor.name}, ${doctor.title}`} />
           </div>
         </FadeIn>
 

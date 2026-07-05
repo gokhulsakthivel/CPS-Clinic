@@ -12,6 +12,7 @@ import { pageMeta } from '../constants/pageMeta.js';
 // Story → Meet the doctor → Mission/Vision → Values → Difference → CTA.
 
 function DoctorPhotoPanel() {
+  const base = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
   return (
     <div
       style={{
@@ -22,36 +23,27 @@ function DoctorPhotoPanel() {
         border: `1px solid ${C.border}`,
         borderRadius: 20,
         overflow: 'hidden',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        gap: 8,
       }}
     >
-      <span
-        aria-hidden="true"
-        style={{
-          fontFamily: 'Poppins',
-          fontWeight: 700,
-          fontSize: 'clamp(56px, 9vw, 108px)',
-          color: '#C9D3DC',
-          letterSpacing: '-0.04em',
-          lineHeight: 1,
-        }}
-      >
-        {doctor.initials}
-      </span>
-      <span
-        style={{
-          fontSize: 12,
-          color: C.muted,
-          letterSpacing: '0.4px',
-          textTransform: 'uppercase',
-        }}
-      >
-        Photograph coming soon
-      </span>
+      <picture>
+        <source srcSet={`${base}/doctor.webp`} type="image/webp" />
+        <img
+          src={`${base}/doctor.jpg`}
+          alt={`Portrait of ${doctor.name}, ${doctor.title}`}
+          loading="lazy"
+          decoding="async"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            // Nudge crop up slightly so the face stays centred at tighter aspects.
+            objectPosition: '50% 22%',
+            display: 'block',
+          }}
+        />
+      </picture>
     </div>
   );
 }
