@@ -86,6 +86,23 @@
     <a class="drcps-skip" href="#main">Skip to content</a>
 
     <!--
+      SPA GitHub Pages decoder — pairs with 404.html. If someone lands here
+      via the fallback redirect (URL contains `/?/…`), rewrite the address
+      bar back to the intended path before React Router mounts.
+    -->
+    <script type="text/javascript">
+      (function (l) {
+        if (l.search[1] === '/') {
+          var decoded = l.search.slice(1).split('&').map(function (s) {
+            return s.replace(/~and~/g, '&');
+          }).join('?');
+          window.history.replaceState(null, null,
+            l.pathname.slice(0, -1) + decoded + l.hash);
+        }
+      })(window.location);
+    </script>
+
+    <!--
       Inline first-paint loader. Lives inside <div id="root"> so React
       atomically replaces it on mount — no flicker, no cleanup code.
       Pure CSS, system fonts only (Google Fonts may still be loading).
