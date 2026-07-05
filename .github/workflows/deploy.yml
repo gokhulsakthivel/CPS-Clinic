@@ -24,11 +24,17 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
 
-      - run: npm ci
+      - run: |
+          echo "Node: $(node -v)  npm: $(npm -v)"
+          echo "NODE_ENV=${NODE_ENV:-unset}  NPM_CONFIG_PRODUCTION=${NPM_CONFIG_PRODUCTION:-unset}"
+          npm ci
+          echo "--- node_modules/.bin/vite ---"
+          ls -la node_modules/.bin/vite || true
+          echo "--- node_modules/vite ---"
+          ls -la node_modules/vite 2>&1 | head -20 || true
 
-      - run: npm run build
+      - run: node ./node_modules/vite/bin/vite.js build
         env:
           VITE_BASE: /CPS-Clinic/
 
