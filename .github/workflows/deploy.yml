@@ -25,16 +25,20 @@ jobs:
         with:
           node-version: 20
 
-      - run: |
-          echo "Node: $(node -v)  npm: $(npm -v)"
-          echo "NODE_ENV=${NODE_ENV:-unset}  NPM_CONFIG_PRODUCTION=${NPM_CONFIG_PRODUCTION:-unset}"
-          npm ci
-          echo "--- node_modules/.bin/vite ---"
-          ls -la node_modules/.bin/vite || true
-          echo "--- node_modules/vite ---"
-          ls -la node_modules/vite 2>&1 | head -20 || true
+      - name: Install dependencies
+        run: |
+          set -x
+          env | grep -Ei 'NODE|NPM|CI' || true
+          rm -rf node_modules
+          npm install --no-audit --no-fund --loglevel=info 2>&1 | tail -40
+          echo '--- top-level node_modules ---'
+          ls node_modules | head -40
+          echo '--- vite? ---'
+          ls -la node_modules/vite 2>&1 | head -5 || true
+          test -f node_modules/vite/bin/vite.js && echo "OK vite bin present" || echo "MISSING vite bin"
 
-      - run: node ./node_modules/vite/bin/vite.js build
+      - name: Build
+        run: node ./node_modules/vite/bin/vite.js build
         env:
           VITE_BASE: /CPS-Clinic/
 
