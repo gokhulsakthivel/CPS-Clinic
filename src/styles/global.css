@@ -1,0 +1,403 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  /* Mobile-first container padding — grows with viewport */
+  --pad-x: 20px;
+}
+@media (min-width: 640px)  { :root { --pad-x: 24px; } }
+@media (min-width: 900px)  { :root { --pad-x: 28px; } }
+@media (min-width: 1200px) { :root { --pad-x: 48px; } }
+
+/* ---------- Base ---------- */
+html, body { margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: #16222E;
+  background: #FFFFFF;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden; /* guard against accidental horizontal overflow on mobile */
+}
+h1, h2, h3, h4 {
+  font-family: 'Poppins', system-ui, sans-serif;
+  letter-spacing: -0.3px;
+  margin: 0;
+}
+h2 { text-wrap: balance; }
+p { margin: 0; }
+button { font-family: inherit; }
+a { color: inherit; text-decoration: none; }
+img, svg, video { max-width: 100%; height: auto; }
+
+/* ---------- Responsive container ---------- */
+.drcps-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: var(--pad-x);
+  padding-right: var(--pad-x);
+}
+
+/* ---------- 2-column layout utility (mobile-first) ---------- */
+.drcps-2col {
+  display: grid;
+  gap: 32px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 900px) {
+  .drcps-2col           { grid-template-columns: 1fr 1fr; gap: 56px; }
+  .drcps-2col--wide-l   { grid-template-columns: 1.15fr 1fr; }
+  .drcps-2col--wide-r   { grid-template-columns: 1fr 1.15fr; }
+}
+
+/* ---------- Stats band grid (2-col mobile → 4-col ≥640px) ---------- */
+.drcps-stats-grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (min-width: 640px) {
+  .drcps-stats-grid { grid-template-columns: repeat(4, 1fr); gap: 32px; }
+}
+
+/* ---------- Featured services (2-col asymmetric at ≥800px) ---------- */
+.drcps-featured {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 800px) {
+  .drcps-featured { grid-template-columns: 1.35fr 1fr; gap: 24px; }
+}
+
+/* ---------- Auto-fit responsive card grid ---------- */
+.drcps-grid-cards {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (min-width: 640px) { .drcps-grid-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; } }
+@media (min-width: 900px) { .drcps-grid-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+/* Data-dense variant (facilities): steps 1 → 2 → 3 */
+.drcps-grid-cards--dense {
+  grid-template-columns: 1fr;
+}
+@media (min-width: 540px) { .drcps-grid-cards--dense { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 900px) { .drcps-grid-cards--dense { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+/* Why-Choose grid: 1 → 2 at ≥800px */
+.drcps-grid-2at800 {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 800px) {
+  .drcps-grid-2at800 { grid-template-columns: 1fr 1fr; gap: 28px 36px; }
+}
+
+/* Journey — vertical stepper mobile, horizontal timeline ≥720px */
+@media (min-width: 720px) {
+  .drcps-journey-mobile  { display: none !important; }
+  .drcps-journey-desktop { display: grid !important; }
+}
+
+/* Testimonial asymmetric grid (large left + 2 stacked right at ≥800px) */
+.drcps-testimonial-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 800px) {
+  .drcps-testimonial-grid { grid-template-columns: 1.35fr 1fr; gap: 24px; }
+}
+
+/* Review masonry (CSS columns) — 1 → 2 → 3 across breakpoints */
+.drcps-review-columns { column-count: 1; column-gap: 16px; }
+@media (min-width: 640px) { .drcps-review-columns { column-count: 2; } }
+@media (min-width: 1000px) { .drcps-review-columns { column-count: 3; } }
+
+/* Gallery grids — auto-fit tiles that keep their own aspect ratios */
+.drcps-gallery-preview {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 1fr 1fr;
+}
+@media (min-width: 640px) { .drcps-gallery-preview { grid-template-columns: repeat(4, 1fr); gap: 16px; } }
+
+.drcps-gallery-strip {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 540px) { .drcps-gallery-strip { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 900px) { .drcps-gallery-strip { grid-template-columns: repeat(3, 1fr); gap: 18px; } }
+
+/* Full page gallery group — first item spans 2 cols at desktop for editorial rhythm */
+.drcps-gallery-group {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px) { .drcps-gallery-group { grid-template-columns: 1fr 1fr; gap: 18px; } }
+@media (min-width: 900px) { .drcps-gallery-group { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+@media (min-width: 900px) { .drcps-gallery-group > :first-child { grid-column: span 2; } }
+
+/* Horizontal jump bar — single row that scrolls sideways on narrow screens
+   instead of wrapping into ugly multi-row pill soup. */
+.drcps-jumpbar {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  padding: 6px;
+  background: #EAF3FB;
+  border-radius: 999px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;             /* Firefox */
+  -ms-overflow-style: none;          /* IE/Edge */
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+.drcps-jumpbar::-webkit-scrollbar { display: none; }
+.drcps-jumpbar > a {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+/* Map embed — mobile-first responsive aspect ratio.
+   Taller portrait on phones (a map is more useful vertical when narrow),
+   flattens to 16:9 on tablet/desktop. No min-height — that combined with
+   aspect-ratio forces horizontal overflow on narrow viewports. */
+.drcps-map {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+@media (min-width: 640px)  { .drcps-map { aspect-ratio: 4 / 3; } }
+@media (min-width: 900px)  { .drcps-map { aspect-ratio: 16 / 9; } }
+.drcps-map iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+/* ---------- Show/hide utilities (mobile-first) ---------- */
+.drcps-only-desktop { display: none; }
+.drcps-desktop-flex { display: none; }
+.drcps-only-desktop-sm { display: none; }
+.drcps-only-wide { display: none; }
+@media (min-width: 540px) {
+  .drcps-only-desktop-sm { display: initial; }
+}
+@media (min-width: 900px) {
+  .drcps-only-desktop { display: initial; }
+  .drcps-desktop-flex { display: flex; }
+  .drcps-only-mobile  { display: none !important; }
+}
+@media (min-width: 1100px) {
+  .drcps-only-wide { display: initial; }
+}
+
+/* ---------- Skip link ---------- */
+.drcps-skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: #0A4D8C;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 0 0 8px 0;
+  font-size: 14px;
+  z-index: 100;
+}
+.drcps-skip:focus { left: 0; }
+
+/* ---------- Keyboard focus ring (mouse clicks stay clean) ---------- */
+:focus { outline: none; }
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[role="tab"]:focus-visible,
+label:focus-visible,
+summary:focus-visible {
+  outline: 2px solid #0A4D8C;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+/* Buttons already have a border-radius — keep the ring hugging it */
+.drcps-btn:focus-visible {
+  outline: 2px solid #0A4D8C;
+  outline-offset: 3px;
+}
+/* Inputs use their own border for state; use box-shadow for the ring so the
+   input's own border-radius (8px) is respected */
+.drcps-input:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(10, 77, 140, 0.22);
+}
+
+/* ---------- Buttons ---------- */
+.drcps-btn {
+  transition: background-color 140ms ease, color 140ms ease, transform 100ms var(--ease-out);
+  will-change: transform;
+  -webkit-tap-highlight-color: transparent;
+  white-space: nowrap;
+}
+.drcps-btn:active { transform: scale(0.97); }
+
+.drcps-btn-primary:hover { background: #073963 !important; }
+.drcps-btn-green:hover   { background: #178a63 !important; }
+.drcps-btn-outline:hover { background: #EAF3FB !important; }
+
+/* Enforce comfortable touch targets on coarse pointers */
+@media (pointer: coarse) {
+  .drcps-btn, .drcps-tap {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* ---------- Nav links ---------- */
+.drcps-nav-link { transition: color 140ms ease; }
+.drcps-nav-link:hover { color: #0A4D8C; }
+
+/* ---------- Scroll fade-in ---------- */
+.drcps-fade {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 380ms var(--ease-out),
+    transform 380ms var(--ease-out);
+}
+.drcps-fade.drcps-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Hover (pointer guard) ---------- */
+@media (hover: hover) and (pointer: fine) {
+  .drcps-card {
+    transition:
+      transform 200ms var(--ease-out),
+      box-shadow 200ms var(--ease-out);
+  }
+  .drcps-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 24px rgba(10, 77, 140, 0.10);
+  }
+}
+
+/* ---------- FAQ accordion ---------- */
+.drcps-accordion-body {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 250ms var(--ease-out);
+}
+.drcps-accordion-body.open { max-height: 400px; }
+
+.drcps-accordion-toggle {
+  transition: transform 180ms var(--ease-out);
+}
+.drcps-accordion-toggle.open { transform: rotate(45deg); }
+
+/* ---------- Mobile menu ---------- */
+.drcps-mobile-menu {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 260ms var(--ease-out);
+}
+.drcps-mobile-menu.open { max-height: 640px; }
+
+/* ---------- Inputs ---------- */
+.drcps-input {
+  width: 100%;
+  border: 1px solid #E3E9EE;
+  border-radius: 8px;
+  padding: 12px 13px; /* 12px min-height contributes to 44px touch target */
+  font-size: 16px;    /* prevent iOS auto-zoom on focus */
+  font-family: 'Inter', sans-serif;
+  color: #16222E;
+  outline: none;
+  background: #fff;
+  transition: border-color 150ms ease;
+}
+.drcps-input:focus { border-color: #0A4D8C; }
+
+/* ---------- Sticky mobile bar spacing ---------- */
+.drcps-sticky {
+  /* Sit above the home-indicator on iOS */
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+.drcps-sticky-pad {
+  /* Extra room so fixed bar never overlaps footer / last-child */
+  height: calc(60px + env(safe-area-inset-bottom, 0px));
+}
+@media (min-width: 900px) {
+  .drcps-sticky      { display: none !important; }
+  .drcps-sticky-pad  { display: none; }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .drcps-fade {
+    transform: none;
+    transition: opacity 200ms ease;
+  }
+  .drcps-card, .drcps-btn, .drcps-nav-link {
+    transition: none;
+  }
+  .drcps-accordion-body,
+  .drcps-mobile-menu,
+  .drcps-accordion-toggle {
+    transition: none;
+  }
+  .drcps-route-spinner { animation: none !important; }
+}
+
+/* ---------- Route-change loader ---------- */
+/* Delay reveal so short chunk loads (<150ms) don't flash the spinner. */
+.drcps-route-fallback {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 48px var(--pad-x);
+  opacity: 0;
+  animation: drcps-route-appear 220ms var(--ease-out) 150ms forwards;
+}
+.drcps-route-spinner {
+  width: 28px;
+  height: 28px;
+  border: 2.5px solid #EAF3FB;
+  border-top-color: #0A4D8C;
+  border-radius: 50%;
+  animation: drcps-route-spin 720ms linear infinite;
+}
+.drcps-route-caption {
+  font-size: 12.5px;
+  color: #5B7184;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+@keyframes drcps-route-spin  { to { transform: rotate(360deg); } }
+@keyframes drcps-route-appear { to { opacity: 1; } }
+
+/* ---------- Print ---------- */
+@media print {
+  .drcps-sticky, .drcps-skip, header nav button { display: none !important; }
+  body { color: #000; background: #fff; }
+  a { text-decoration: underline; }
+}

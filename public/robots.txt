@@ -1,0 +1,6 @@
+# Public everything, index nothing off-limits.
+User-agent: *
+Allow: /
+Disallow: /dev/
+
+Sitemap: https://drcps.clinic/sitemap.xml

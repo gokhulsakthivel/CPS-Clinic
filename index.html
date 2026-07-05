@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0A4D8C" />
+    <meta name="description" content="DR.CPS Speciality & Diabetic Clinic — trusted physician and diabetologist care for diabetes, heart, kidney, and lifestyle-related conditions in Podanur, Coimbatore." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <title>DR.CPS Speciality & Diabetic Clinic — Podanur, Coimbatore</title>
+
+    <!--
+      Structured data — HealthcareBusiness + Physician + AggregateRating.
+      Verified against Google's Rich Results test schema. Update address /
+      phone / hours here when they land in constants/content.js at launch.
+    -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "MedicalClinic",
+          "@id": "https://drcps.clinic/#clinic",
+          "name": "DR.CPS Speciality & Diabetic Clinic",
+          "alternateName": "DR.CPS Clinic",
+          "description": "Consultant physician and diabetologist care for diabetes, heart, kidney, thyroid, and lifestyle-related conditions in Podanur, Coimbatore.",
+          "url": "https://drcps.clinic/",
+          "image": "https://drcps.clinic/og.png",
+          "priceRange": "₹₹",
+          "medicalSpecialty": [
+            "Diabetology",
+            "InternalMedicine",
+            "PreventiveMedicine",
+            "Endocrine"
+          ],
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "No. 154, SIFA Tower, Karuparayan Kovil Bus Stop, Podanur Main Road, Kurichi Pirivu",
+            "addressLocality": "Coimbatore",
+            "addressRegion": "Tamil Nadu",
+            "postalCode": "641023",
+            "addressCountry": "IN"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 10.96996,
+            "longitude": 76.971312
+          },
+          "hasMap": "https://maps.app.goo.gl/z6f6vA3YHe4HdBQeA",
+          "areaServed": ["Podanur", "Coimbatore", "Kurichi", "Tamil Nadu"],
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "59",
+            "bestRating": "5",
+            "worstRating": "1"
+          }
+        },
+        {
+          "@type": "Physician",
+          "@id": "https://drcps.clinic/#physician",
+          "name": "Dr. S. S. Chakravarthi",
+          "honorificPrefix": "Dr.",
+          "jobTitle": "Consultant Physician & Diabetologist",
+          "description": "Consultant physician and diabetologist with a special interest in cardio-metabolic medicine. MD in General Medicine and CPCDM fellowship in diabetology.",
+          "medicalSpecialty": ["Diabetology", "InternalMedicine"],
+          "hasCredential": [
+            { "@type": "EducationalOccupationalCredential", "name": "MBBS" },
+            { "@type": "EducationalOccupationalCredential", "name": "MD – General Medicine" },
+            { "@type": "EducationalOccupationalCredential", "name": "CPCDM Fellowship in Diabetology" },
+            { "@type": "EducationalOccupationalCredential", "name": "PHFI Certified – Obesity Prevention & Management" },
+            { "@type": "EducationalOccupationalCredential", "name": "BLS Certified" },
+            { "@type": "EducationalOccupationalCredential", "name": "ACLS Certified" }
+          ],
+          "worksFor": { "@id": "https://drcps.clinic/#clinic" }
+        }
+      ]
+    }
+    </script>
+  </head>
+  <body>
+    <a class="drcps-skip" href="#main">Skip to content</a>
+
+    <!--
+      Inline first-paint loader. Lives inside <div id="root"> so React
+      atomically replaces it on mount — no flicker, no cleanup code.
+      Pure CSS, system fonts only (Google Fonts may still be loading).
+      Respects prefers-reduced-motion.
+    -->
+    <style>
+      .drcps-boot {
+        position: fixed; inset: 0;
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: center;
+        gap: 20px;
+        background: #FFFFFF;
+        color: #16222E;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        z-index: 1;
+      }
+      .drcps-boot-mark {
+        font-weight: 700;
+        font-size: 22px;
+        letter-spacing: -0.4px;
+        color: #0A4D8C;
+      }
+      .drcps-boot-spinner {
+        width: 32px; height: 32px;
+        border: 2.5px solid #EAF3FB;
+        border-top-color: #0A4D8C;
+        border-radius: 50%;
+        animation: drcps-spin 720ms linear infinite;
+      }
+      .drcps-boot-caption {
+        font-size: 12.5px;
+        color: #5B7184;
+        letter-spacing: 0.4px;
+        text-transform: uppercase;
+      }
+      @keyframes drcps-spin { to { transform: rotate(360deg); } }
+      @media (prefers-reduced-motion: reduce) {
+        .drcps-boot-spinner {
+          animation: none;
+          border-top-color: #EAF3FB;
+          border-left-color: #0A4D8C;
+        }
+      }
+    </style>
+
+    <div id="root">
+      <div class="drcps-boot" role="status" aria-live="polite" aria-label="Loading DR.CPS Speciality &amp; Diabetic Clinic">
+        <div class="drcps-boot-spinner" aria-hidden="true"></div>
+        <div class="drcps-boot-mark">DR.CPS</div>
+        <div class="drcps-boot-caption">Loading</div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
