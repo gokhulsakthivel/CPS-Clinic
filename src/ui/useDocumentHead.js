@@ -13,7 +13,11 @@ import { useEffect } from 'react';
 const SITE_NAME = 'DR.CPS Speciality & Diabetic Clinic';
 const SITE_ORIGIN =
   typeof window !== 'undefined' ? window.location.origin : 'https://drcps.clinic';
-const OG_IMAGE = '/og.png'; // TODO(phase 8): drop a 1200×630 og.png in /public
+
+// Vite's BASE_URL is '/CPS-Clinic/' on GitHub Pages, '/' locally / at a root domain.
+// Trim trailing slash so it composes cleanly with page paths like '/about'.
+const BASE = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+const OG_IMAGE = `${BASE}/og.png`;
 
 function upsertMeta(attr, key, value) {
   if (typeof document === 'undefined' || value == null) return;
@@ -49,8 +53,16 @@ export default function useDocumentHead(m) {
   useEffect(() => {
     if (typeof document === 'undefined') return;
 
-    const path = m.path || (typeof window !== 'undefined' ? window.location.pathname : '/');
-    const url = `${SITE_ORIGIN}${path}`;
+    // Resolve the app-relative path (e.g. '/about'), regardless of whether the
+    // caller passed pageMeta.path or we're inferring from window.location.
+    let relPath = m.path;
+    if (!relPath && typeof window !== 'undefined') {
+      const p = window.location.pathname;
+      relPath = (BASE && p.startsWith(BASE)) ? (p.slice(BASE.length) || '/') : p;
+    }
+    if (!relPath) relPath = '/';
+
+    const url = `${SITE_ORIGIN}${BASE}${relPath === '/' ? '/' : relPath}`;
     const fullTitle = m.title === SITE_NAME ? m.title : `${m.title} — ${SITE_NAME}`;
     const image = m.image || OG_IMAGE;
     const ogType = m.ogType || 'website';
