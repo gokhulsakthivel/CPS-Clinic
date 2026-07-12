@@ -13,15 +13,24 @@ import Svg from '../ui/Svg.jsx';
 //   layout="preview" (default) → 4-tile equal-height strip (Home)
 //   layout="strip"             → 6-tile 3-col grid (Facilities)
 
-function firstN(n) {
-  const out = [];
+// Vite base — required when the site is served under a sub-path.
+const base = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+const toSrc = (src) => (src ? `${base}/${src.replace(/^\/+/, '')}` : undefined);
+
+// Flatten groups into a single list. When `preferPhotos` is true, items
+// that have a real `src` are returned first, so preview strips populate
+// with real content before any placeholders.
+function firstN(n, { preferPhotos = true } = {}) {
+  const flat = [];
   for (const g of galleryGroups) {
     for (const item of g.items) {
-      if (out.length >= n) return out;
-      out.push({ ...item, groupTitle: g.title });
+      flat.push({ ...item, groupTitle: g.title });
     }
   }
-  return out;
+  const ordered = preferPhotos
+    ? [...flat.filter((i) => i.src), ...flat.filter((i) => !i.src)]
+    : flat;
+  return ordered.slice(0, n);
 }
 
 export default function Gallery({ layout = 'preview', background = C.white }) {
@@ -87,6 +96,8 @@ export default function Gallery({ layout = 'preview', background = C.white }) {
                 label={item.label}
                 aspect={uniformAspect || item.aspect}
                 icon={item.icon}
+                src={toSrc(item.src)}
+                alt={item.alt}
               />
             </FadeIn>
           ))}

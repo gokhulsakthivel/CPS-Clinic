@@ -9,7 +9,11 @@ import useDocumentHead from '../ui/useDocumentHead.js';
 import { pageMeta } from '../constants/pageMeta.js';
 
 // /gallery — Airbnb-style photo tour. Groups render as titled editorial
-// sections; first item in each group spans 2 cols on desktop for rhythm.
+// sections. Each item's aspect ratio is driven by data (see content.js).
+
+// Vite base — required when the site is served under a sub-path.
+const base = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+const toSrc = (src) => (src ? `${base}/${src.replace(/^\/+/, '')}` : undefined);
 
 function GroupSection({ group }) {
   return (
@@ -46,8 +50,10 @@ function GroupSection({ group }) {
           <FadeIn key={item.label} delay={(i % 3) * 60}>
             <GalleryFrame
               label={item.label}
-              aspect={i === 0 ? 'hero' : item.aspect}
+              aspect={item.aspect}
               icon={item.icon}
+              src={toSrc(item.src)}
+              alt={item.alt}
             />
           </FadeIn>
         ))}

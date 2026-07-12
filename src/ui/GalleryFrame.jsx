@@ -9,10 +9,21 @@ const RATIOS = {
   portrait: '3 / 4',
 };
 
+// Derive a WebP sibling URL from a JPG/PNG/JPEG source. Returns null when
+// the input isn't a recognised extension so the caller can skip <source>.
+function toWebp(src) {
+  if (!src) return null;
+  const m = src.match(/\.(jpe?g|png)(\?.*)?$/i);
+  return m ? src.replace(/\.(jpe?g|png)(\?.*)?$/i, '.webp$2') : null;
+}
+
 /**
  * Single gallery frame. Renders the image when `src` is provided; otherwise
  * shows a labelled placeholder in the same brand style as the doctor photo
  * panel. Swap-in-later without any component change.
+ *
+ * When `src` points to a `.jpg`/`.png`, a sibling `.webp` is served
+ * automatically via <picture> for browsers that support it.
  *
  * @param {object} props
  * @param {string} props.label
@@ -23,6 +34,7 @@ const RATIOS = {
  */
 export default function GalleryFrame({ label, aspect = 'wide', icon, src, alt }) {
   const ratio = RATIOS[aspect] || RATIOS.wide;
+  const webpSrc = toWebp(src);
 
   return (
     <figure
@@ -39,17 +51,21 @@ export default function GalleryFrame({ label, aspect = 'wide', icon, src, alt })
       }}
     >
       {src ? (
-        <img
-          src={src}
-          alt={alt || label}
-          loading="lazy"
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            display: 'block',
-          }}
-        />
+        <picture>
+          {webpSrc && <source srcSet={webpSrc} type="image/webp" />}
+          <img
+            src={src}
+            alt={alt || label}
+            loading="lazy"
+            decoding="async"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              display: 'block',
+            }}
+          />
+        </picture>
       ) : (
         <div
           aria-hidden="true"

@@ -388,20 +388,35 @@ export const facilityGroups = [
   },
 ];
 
-// Gallery groups (Airbnb photo-tour inspired). Each item currently renders
-// as a labelled placeholder frame; swap `src` in later without any code
-// change — the frame component reads `src` first, falls back to placeholder.
+// Gallery groups (Airbnb photo-tour inspired). Each item can optionally
+// declare a `src` (served from /public/gallery/) and an `alt`. The
+// GalleryFrame component renders the photo when `src` is present, and
+// falls back to a labelled placeholder otherwise.
 //
 // Aspect ratios: 'wide' = 4/3, 'portrait' = 3/4, 'square' = 1/1, 'hero' = 16/9.
+//
+// Real photos are listed FIRST within each group so preview strips
+// (Home + Facilities) pick real content before placeholders.
 export const galleryGroups = [
   {
     id: 'reception',
     title: 'Reception & waiting area',
     caption: 'The first thing you see when you walk in — clean, quiet, unhurried.',
     items: [
-      { label: 'Reception desk',   aspect: 'hero',     icon: 'clipboard' },
-      { label: 'Waiting area',     aspect: 'portrait', icon: 'body' },
-      { label: 'Clinic signage',   aspect: 'square',   icon: 'map' },
+      {
+        label: 'Reception desk',
+        aspect: 'portrait',
+        icon: 'clipboard',
+        src: 'gallery/reception.jpg',
+        alt: 'Reception desk at DR.CPS Clinic with BP monitor, glucometer, and patient register.',
+      },
+      {
+        label: 'Waiting area',
+        aspect: 'portrait',
+        icon: 'body',
+        src: 'gallery/waiting-area.jpg',
+        alt: 'Waiting area with seating, water dispenser, and self-care information poster.',
+      },
     ],
   },
   {
@@ -409,9 +424,13 @@ export const galleryGroups = [
     title: 'Consultation room',
     caption: 'Where every visit begins.',
     items: [
-      { label: 'Consultation desk',      aspect: 'wide',     icon: 'stethoscope' },
-      { label: 'Examination bed',        aspect: 'portrait', icon: 'body' },
-      { label: 'Diagnostic instruments', aspect: 'square',   icon: 'heartbeat' },
+      {
+        label: 'Consultation desk',
+        aspect: 'portrait',
+        icon: 'stethoscope',
+        src: 'gallery/consultation.jpg',
+        alt: "Dr. S. S. Chakravarthi's consultation desk with stethoscope, name plate, and framed medical council certificates.",
+      },
     ],
   },
   {
@@ -419,10 +438,20 @@ export const galleryGroups = [
     title: 'Diagnostic & clinical area',
     caption: 'ECG, blood sugar, nebulization, and day-care IV fluids — all on-site.',
     items: [
-      { label: 'ECG bay',              aspect: 'wide',     icon: 'heartbeat' },
-      { label: 'Blood collection',     aspect: 'portrait', icon: 'testpipe' },
-      { label: 'Nebulization corner',  aspect: 'square',   icon: 'lungs' },
-      { label: 'Day-care IV bay',      aspect: 'wide',     icon: 'droplet' },
+      {
+        label: 'ECG bay',
+        aspect: 'portrait',
+        icon: 'heartbeat',
+        src: 'gallery/ecg-room.jpg',
+        alt: 'ECG room with examination bed, ECG machine, and wall-mounted fan.',
+      },
+      {
+        label: 'Day-care IV bay',
+        aspect: 'portrait',
+        icon: 'droplet',
+        src: 'gallery/day-care.jpg',
+        alt: 'Day care room with hospital bed, IV drip stand, and privacy curtain for short-stay IV fluids.',
+      },
     ],
   },
   {
@@ -430,8 +459,13 @@ export const galleryGroups = [
     title: 'In-house pharmacy',
     caption: 'Prescribed medication, dispensed on-site — no extra stop.',
     items: [
-      { label: 'Pharmacy counter', aspect: 'wide',   icon: 'pill' },
-      { label: 'Dispensing area',  aspect: 'square', icon: 'pill' },
+      {
+        label: 'Pharmacy counter',
+        aspect: 'portrait',
+        icon: 'pill',
+        src: 'gallery/pharmacy.jpg',
+        alt: 'In-house pharmacy at DR.CPS Clinic with organised medication shelves.',
+      },
     ],
   },
   {
@@ -439,8 +473,20 @@ export const galleryGroups = [
     title: 'Getting here',
     caption: 'SIFA Tower on Podanur Main Road, near Karuparayan Kovil bus stop.',
     items: [
-      { label: 'Clinic entrance', aspect: 'hero',     icon: 'map' },
-      { label: 'Street view',     aspect: 'portrait', icon: 'arrowRight' },
+      {
+        label: 'Clinic frontage at night',
+        aspect: 'hero',
+        icon: 'map',
+        src: 'gallery/facade-night.jpg',
+        alt: 'DR.CPS Clinic & Labs illuminated signboard at night showing clinic timings and contact details.',
+      },
+      {
+        label: 'Clinic entrance',
+        aspect: 'wide',
+        icon: 'arrowRight',
+        src: 'gallery/entrance-day.jpg',
+        alt: 'Daytime view of the DR.CPS Clinic entrance with seating outside and services signage.',
+      },
     ],
   },
 ];

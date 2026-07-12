@@ -1,10 +1,9 @@
 import { C } from '../constants/colors.js';
-import { hero, clinic, doctor } from '../constants/content.js';
+import { hero, clinic } from '../constants/content.js';
 import Button from '../ui/Button.jsx';
 import FadeIn from '../ui/FadeIn.jsx';
 
-function PhotoFrame({ alt, ratio }) {
-  const base = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+function PhotoFrame({ src, webpSrc, alt, ratio, objectPosition = '50% 50%' }) {
   return (
     <div
       style={{
@@ -18,9 +17,9 @@ function PhotoFrame({ alt, ratio }) {
       }}
     >
       <picture>
-        <source srcSet={`${base}/doctor.webp`} type="image/webp" />
+        {webpSrc && <source srcSet={webpSrc} type="image/webp" />}
         <img
-          src={`${base}/doctor.jpg`}
+          src={src}
           alt={alt}
           loading="eager"
           fetchpriority="high"
@@ -31,7 +30,7 @@ function PhotoFrame({ alt, ratio }) {
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            objectPosition: '50% 22%',
+            objectPosition,
             display: 'block',
           }}
         />
@@ -44,6 +43,7 @@ const telHref = () => (clinic.phone ? `tel:${clinic.phone.replace(/\s+/g, '')}` 
 const waHref  = () => (clinic.whatsapp ? `https://wa.me/${clinic.whatsapp.replace(/\D/g, '')}` : '#');
 
 export default function Hero() {
+  const base = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
   return (
     <section style={{ background: C.white }}>
       <div
@@ -123,10 +123,15 @@ export default function Hero() {
           </div>
         </FadeIn>
 
-        {/* Right column — photo placeholder */}
+        {/* Right column — clinic frontage photo */}
         <FadeIn delay={80}>
-          <div style={{ maxWidth: 460, marginInline: 'auto', width: '100%' }}>
-            <PhotoFrame alt={`Portrait of ${doctor.name}, ${doctor.title}`} ratio="4 / 5" />
+          <div style={{ maxWidth: 520, marginInline: 'auto', width: '100%' }}>
+            <PhotoFrame
+              src={`${base}/gallery/facade-night.jpg`}
+              webpSrc={`${base}/gallery/facade-night.webp`}
+              alt={`${clinic.name} storefront on Podanur Main Road, Coimbatore, illuminated at night.`}
+              ratio="5 / 4"
+            />
           </div>
         </FadeIn>
       </div>
