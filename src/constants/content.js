@@ -27,6 +27,7 @@ export const nav = [
   { label: 'Services',   to: '/services' },
   { label: 'Facilities', to: '/facilities' },
   { label: 'Gallery',    to: '/gallery' },
+  { label: 'Updates',    to: '/updates' },
   { label: 'Resources',  to: '/resources' },
   { label: 'Contact',    to: '/contact' },
 ];

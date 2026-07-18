@@ -395,6 +395,92 @@ summary:focus-visible {
 @keyframes drcps-route-spin  { to { transform: rotate(360deg); } }
 @keyframes drcps-route-appear { to { opacity: 1; } }
 
+/* ---------- Prose (markdown-rendered content) ---------- */
+.drcps-prose {
+  font-size: 16.5px;
+  line-height: 1.7;
+  color: #16222E;
+}
+.drcps-prose > * + * { margin-top: 1.15em; }
+.drcps-prose h2 {
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-size: clamp(20px, 2.4vw, 24px);
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: #16222E;
+  margin-top: 2em;
+}
+.drcps-prose h3 {
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-size: clamp(17px, 2vw, 19px);
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  color: #16222E;
+  margin-top: 1.6em;
+}
+.drcps-prose h4 {
+  font-size: 15.5px;
+  font-weight: 700;
+  color: #16222E;
+  margin-top: 1.4em;
+}
+.drcps-prose p { color: #16222E; }
+.drcps-prose a {
+  color: #0A4D8C;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(10, 77, 140, 0.35);
+}
+.drcps-prose a:hover { border-bottom-color: #0A4D8C; }
+.drcps-prose strong { color: #16222E; font-weight: 600; }
+.drcps-prose em     { font-style: italic; }
+.drcps-prose ul, .drcps-prose ol {
+  padding-left: 1.35em;
+}
+.drcps-prose li + li { margin-top: 0.35em; }
+.drcps-prose blockquote {
+  margin: 0;
+  padding: 12px 18px;
+  border-left: 3px solid #0A4D8C;
+  background: #F6F8FA;
+  color: #16222E;
+  border-radius: 0 8px 8px 0;
+}
+.drcps-prose blockquote p { margin: 0; }
+.drcps-prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.92em;
+  background: #F6F8FA;
+  padding: 0.12em 0.42em;
+  border-radius: 4px;
+  border: 1px solid #E4E9EF;
+}
+.drcps-prose pre {
+  background: #0F1B29;
+  color: #EAF3FB;
+  padding: 14px 16px;
+  border-radius: 10px;
+  overflow-x: auto;
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+.drcps-prose pre code { background: transparent; border: 0; padding: 0; color: inherit; }
+.drcps-prose hr {
+  border: 0;
+  border-top: 1px solid #E4E9EF;
+  margin: 2em 0;
+}
+.drcps-prose .drcps-md-figure {
+  margin: 0;
+}
+.drcps-prose .drcps-md-figure img,
+.drcps-prose p > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid #E4E9EF;
+}
+
 /* ---------- Print ---------- */
 @media print {
   .drcps-sticky, .drcps-skip, header nav button { display: none !important; }

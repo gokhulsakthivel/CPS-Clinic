@@ -1,0 +1,150 @@
+# Decap CMS schema. Consumed by /admin/index.html on Netlify.
+#
+# Storage:
+#   - Backend is Netlify's Git Gateway → commits land in the repo the
+#     Netlify site is linked to. No GitHub account needed by the doctor.
+#   - Media uploaded through the CMS is placed alongside the entry it
+#     belongs to (see `media_folder` on the field itself).
+#
+# Schema notes:
+#   - The Updates collection writes to content/updates/<slug>/index.md.
+#   - `format: yaml-frontmatter` keeps files compatible with our
+#     src/lib/frontmatter.js parser and the existing seed posts.
+#   - `cover` and `gallery` fields declare filenames that the runtime
+#     loader in src/constants/updates.js resolves against the folder.
+
+backend:
+  name: git-gateway
+  branch: main
+  # Squash-merge editorial workflow branches when publishing. Simple
+  # publish flow is enough for a small team — no draft state needed.
+
+# Where uploaded media go relative to the entry (kept next to index.md
+# so the loader can bundle them via import.meta.glob).
+media_folder: "content/updates"
+public_folder: "/updates"
+
+# Localised UI copy so buttons feel familiar to the clinic team.
+locale: "en"
+
+site_url: "https://drcps.clinic"
+display_url: "https://drcps.clinic"
+logo_url: "/og.png"
+
+collections:
+  - name: "updates"
+    label: "Updates"
+    label_singular: "Update"
+    description: >
+      Camps, seminars, awareness events, screening drives, and clinic
+      announcements. Each entry becomes one page under drcps.clinic/updates/…
+    folder: "content/updates"
+    format: "yaml-frontmatter"
+    create: true
+    delete: true
+    # File path pattern — Decap replaces {{fields.slug}} with the value
+    # entered in the Slug field. Every post gets its own folder.
+    path: "{{fields.slug}}/index"
+    slug: "{{fields.slug}}"
+    # Uploaded media in this collection stay inside the entry's folder.
+    media_folder: ""
+    public_folder: ""
+    # Preview panel is disabled — the real site preview via Netlify
+    # deploy previews is a better source of truth than Decap's built-in
+    # markdown preview for our custom styling.
+    preview: false
+    editor:
+      preview: false
+
+    fields:
+      - label: "Slug (URL & folder name)"
+        name: "slug"
+        widget: "string"
+        hint: "kebab-case, e.g. 2026-08-diabetes-screening-camp-podanur"
+        pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "Use lowercase letters, digits, and hyphens only."]
+
+      - label: "Title"
+        name: "title"
+        widget: "string"
+        hint: "Shown as the H1 on the post page and card."
+
+      - label: "Date"
+        name: "date"
+        widget: "datetime"
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+        picker_utc: true
+        hint: "Publication date. Drives sort order (newest first)."
+
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "Camp",         value: "camp" }
+          - { label: "Seminar",      value: "seminar" }
+          - { label: "Awareness",    value: "awareness" }
+          - { label: "Screening",    value: "screening" }
+          - { label: "Announcement", value: "announcement" }
+        default: "announcement"
+
+      - label: "Tags"
+        name: "tags"
+        widget: "list"
+        required: false
+        hint: "Optional. Free-form keywords (e.g. diabetes, community)."
+
+      - label: "Location"
+        name: "location"
+        widget: "string"
+        required: false
+        hint: "Where the event happened, e.g. Karuparayan Kovil Grounds, Podanur."
+
+      - label: "Author"
+        name: "author"
+        widget: "string"
+        required: false
+        default: "DR.CPS Clinic Team"
+
+      - label: "Excerpt"
+        name: "excerpt"
+        widget: "text"
+        hint: "~200 characters. Shows up on cards and in Google search snippets."
+
+      - label: "Cover image"
+        name: "cover"
+        widget: "image"
+        required: false
+        media_folder: ""
+        public_folder: ""
+        hint: "Uploaded into this post's folder. Landscape (16:9) looks best."
+
+      - label: "Cover alt text"
+        name: "coverAlt"
+        widget: "string"
+        required: false
+        hint: "Describe the cover photo in one sentence — used for screen readers."
+
+      - label: "Feature on home page"
+        name: "featured"
+        widget: "boolean"
+        required: false
+        default: false
+        hint: "If enabled, this post appears in the 'Latest from the clinic' section on the home page."
+
+      - label: "Gallery photos"
+        name: "gallery"
+        widget: "list"
+        required: false
+        field:
+          label: "Photo"
+          name: "photo"
+          widget: "image"
+          media_folder: ""
+          public_folder: ""
+        hint: "Optional extra photos shown in the gallery grid below the article."
+
+      - label: "Body"
+        name: "body"
+        widget: "markdown"
+        hint: "The write-up. Supports headings, lists, bold, italic, links, blockquotes, and inline images."

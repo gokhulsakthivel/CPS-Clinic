@@ -5,8 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/generate-sitemap.mjs",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "sitemap": "node scripts/generate-sitemap.mjs",
+    "optimize:gallery": "python3 scripts/optimize-gallery.py",
+    "optimize:updates": "python3 scripts/optimize-updates.py"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.1",

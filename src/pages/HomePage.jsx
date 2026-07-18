@@ -5,6 +5,7 @@ import Services from '../components/Services.jsx';
 import WhyChoose from '../components/WhyChoose.jsx';
 import Facilities from '../components/Facilities.jsx';
 import Gallery from '../components/Gallery.jsx';
+import UpdatesTeaser from '../components/UpdatesTeaser.jsx';
 import Journey from '../components/Journey.jsx';
 import Testimonials from '../components/Testimonials.jsx';
 import FAQ from '../components/FAQ.jsx';
@@ -26,6 +27,7 @@ export default function HomePage() {
       <WhyChoose />
       <Facilities />
       <Gallery />
+      <UpdatesTeaser />
       <Journey />
       <Testimonials />
       <FAQ />

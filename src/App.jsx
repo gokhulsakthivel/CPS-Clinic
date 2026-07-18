@@ -16,6 +16,8 @@ const DiabetesClinicPage    = lazy(() => import('./pages/DiabetesClinicPage.jsx'
 const GeneralPhysicianPage  = lazy(() => import('./pages/GeneralPhysicianPage.jsx'));
 const FacilitiesPage        = lazy(() => import('./pages/FacilitiesPage.jsx'));
 const GalleryPage           = lazy(() => import('./pages/GalleryPage.jsx'));
+const UpdatesPage           = lazy(() => import('./pages/UpdatesPage.jsx'));
+const UpdatePage            = lazy(() => import('./pages/UpdatePage.jsx'));
 const ResourcesPage         = lazy(() => import('./pages/ResourcesPage.jsx'));
 const ContactPage           = lazy(() => import('./pages/ContactPage.jsx'));
 const DevPrimitives         = lazy(() => import('./pages/DevPrimitives.jsx'));
@@ -83,6 +85,8 @@ export default function App() {
             <Route path="/services/general-physician"  element={<GeneralPhysicianPage />} />
             <Route path="/facilities"                  element={<FacilitiesPage />} />
             <Route path="/gallery"                     element={<GalleryPage />} />
+            <Route path="/updates"                     element={<UpdatesPage />} />
+            <Route path="/updates/:slug"               element={<UpdatePage />} />
             <Route path="/resources"                   element={<ResourcesPage />} />
             <Route path="/contact"                     element={<ContactPage />} />
 

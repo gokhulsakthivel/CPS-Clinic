@@ -44,6 +44,12 @@ export const pageMeta = {
       'A walkthrough of the clinic in Podanur: reception, consultation room, diagnostic bays, in-house pharmacy, and how to find us. Organised by area.',
     path: '/gallery',
   },
+  updates: {
+    title: 'Updates — camps, seminars & announcements from DR.CPS Clinic',
+    description:
+      'The latest from DR.CPS Clinic in Podanur: community health camps, awareness events, patient education seminars, and clinic announcements.',
+    path: '/updates',
+  },
   resources: {
     title: 'Patient resources — condition guides & frequently asked questions',
     description:

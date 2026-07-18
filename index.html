@@ -157,5 +157,26 @@
     </div>
 
     <script type="module" src="/src/main.jsx"></script>
+
+    <!--
+      Netlify Identity widget — required for Decap CMS auth. Handles
+      email invitation / password-recovery redirects (Netlify sends
+      links back to the site root with #invite_token=… fragments).
+      When present, the widget bounces the user into /admin/ so they
+      land in the CMS logged in. Costs 8 KB gzipped on the main site;
+      lazy behaviour keeps it out of the critical path.
+    -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" defer></script>
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on('init', function (user) {
+          if (!user) {
+            window.netlifyIdentity.on('login', function () {
+              document.location.href = '/admin/';
+            });
+          }
+        });
+      }
+    </script>
   </body>
 </html>

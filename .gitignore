@@ -22,3 +22,7 @@ build/
 #folders
 .agents/
 documents/
+
+# Raw, un-optimized photo drops for update posts. The optimizer script
+# reads these and writes committed .jpg/.webp siblings next to index.md.
+content/updates/*/_raw/
